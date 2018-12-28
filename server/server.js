@@ -9,6 +9,7 @@ let app = express();
 
 app.use(bodyParser.json());
 
+//POST todo
 app.post('/todos', (req, res) => {
     console.log(req.body);
     let todo = new Todo({
@@ -21,7 +22,17 @@ app.post('/todos', (req, res) => {
         res.status(400).send(e);
     });
 });
+//GET ALL todos
+app.get('/todos', (req, res) =>{
+    Todo.find().then((todos) => {
+        res.send({todos});
+    }, (e) => {
+        res.status(400).send(e);
+    })
+});
 
 app.listen(3000, () => {
     console.log('Starting on port 3000')
 });
+
+module.exports ={app};
